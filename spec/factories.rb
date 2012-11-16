@@ -31,6 +31,7 @@ FactoryGirl.define do
     width 5
     x_location 2
     y_location 3
+    image 'FAKE IMAGE'
     user
     board
   end
