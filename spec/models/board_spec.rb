@@ -19,4 +19,68 @@ describe Board do
       end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end
   end
+
+  describe 'validating attributes' do
+    describe 'name' do
+      describe 'nil' do
+	before { board.name = nil }
+
+	it { should_not be_valid }
+      end
+
+      describe 'blank' do
+	before { board.name = '' }
+
+	it { should_not be_valid }
+      end
+    end
+
+    describe 'height' do
+      describe 'negative' do
+	before { board.height = -1 }
+
+	it { should_not be_valid }
+      end
+
+      describe 'zero' do
+	before { board.height = 0 }
+
+	it { should_not be_valid }
+      end
+    end
+
+    describe 'width' do
+      describe 'negative' do
+	before { board.width = -1 }
+
+	it { should_not be_valid }
+      end
+
+      describe 'zero' do
+	before { board.width = 0 }
+
+	it { should_not be_valid }
+      end
+    end
+
+    describe 'timezone' do
+      describe 'nil' do
+	before { board.timezone = nil }
+
+	it { should_not be_valid }
+      end
+
+      describe 'blank' do
+	before { board.timezone = '' }
+
+	it { should_not be_valid }
+      end
+
+      describe 'garbage' do
+	before { board.timezone = 'garbage' }
+
+	it { should_not be_valid }
+      end
+    end
+  end
 end

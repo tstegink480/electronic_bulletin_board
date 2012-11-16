@@ -16,4 +16,34 @@ describe User do
       end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end
   end
+
+  describe 'validating attributes' do
+    describe 'name' do
+      describe 'nil' do
+	before { user.name = nil }
+
+	it { should_not be_valid }
+      end
+
+      describe 'blank' do
+	before { user.name = '' }
+
+	it { should_not be_valid }
+      end
+    end
+
+    describe 'email' do
+      describe 'nil' do
+	before { user.email = nil }
+
+	it { should_not be_valid }
+      end
+
+      describe 'blank' do
+	before { user.email = '' }
+
+	it { should_not be_valid }
+      end
+    end
+  end
 end

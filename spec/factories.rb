@@ -14,7 +14,7 @@ FactoryGirl.define do
     height 10
     width 15
     sequence(:name) {|n| "Board #{n}"}
-    timezone "EST"
+    timezone 'Eastern Time (US & Canada)'
     user
   end
 
