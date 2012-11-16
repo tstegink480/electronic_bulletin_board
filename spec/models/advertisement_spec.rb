@@ -30,4 +30,106 @@ describe Advertisement do
       end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end
   end
+
+  describe 'validating attributes' do
+    describe 'x_location' do
+      describe 'negative' do
+	before { ad.x_location = -1 }
+
+	it { should_not be_valid }
+      end
+
+      describe 'larger than board width' do
+	before do
+	  ad.x_location = 7
+	  board.width = 7
+	end
+
+	it { should_not be_valid }
+      end
+    end
+
+    describe 'y_location' do
+      describe 'negative' do
+	before { ad.y_location = -1 }
+
+	it { should_not be_valid }
+      end
+
+      describe 'larger than board height' do
+	before do
+	  ad.y_location = 4
+	  board.height = 4
+	end
+
+	it { should_not be_valid }
+      end
+    end
+
+    describe 'height' do
+      describe 'negative' do
+	before { ad.height = -1 }
+
+	it { should_not be_valid }
+      end
+
+      describe 'larger than board height' do
+	before do
+	  ad.height = 6
+	  board.height = 5
+	end
+
+	it { should_not be_valid }
+      end
+    end
+
+    describe 'width' do
+      describe 'negative' do
+	before { ad.width = -1 }
+
+	it { should_not be_valid }
+      end
+
+      describe 'larger than board width' do
+	before do
+	  ad.width = 6
+	  board.width = 6
+	end
+
+	it { should_not be_valid }
+      end
+    end
+
+    describe 'image' do
+      describe 'nil' do
+	before { ad.image = nil }
+
+	it { should_not be_valid }
+      end
+    end
+
+    describe 'x_location & width' do
+      describe 'combined larger than board width' do
+	before do
+	  ad.x_location = 3
+	  ad.width = 4
+	  board.width = 6
+	end
+
+	it { should_not be_valid }
+      end
+    end
+
+    describe 'y_location & height' do
+      describe 'combined larger than board height' do
+	before do
+	  ad.y_location = 4
+	  ad.height = 5
+	  board.height = 8
+	end
+
+	it { should_not be_valid }
+      end
+    end
+  end
 end
