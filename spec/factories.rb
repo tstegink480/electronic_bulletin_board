@@ -23,7 +23,6 @@ FactoryGirl.define do
     x_location 4
     y_location 5
     advertisement
-    board
   end
 
   factory :advertisement do
