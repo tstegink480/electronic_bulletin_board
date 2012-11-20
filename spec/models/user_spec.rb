@@ -8,11 +8,27 @@ describe User do
   it { should respond_to(:name) }
   it { should respond_to(:email) }
   it { should respond_to(:admin?) }
+  it { should respond_to(:password) }
+  it { should respond_to(:password_confirmation) }
+  it { should respond_to(:password_digest) }
+  it { should respond_to(:remember_token) }
 
   describe 'accessible attributes' do
     it 'should not allow access to admin' do
       expect do
 	User.new(admin: true)
+      end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+    end
+
+    it 'should not allow access to password_digest' do
+      expect do
+	User.new(password_digest: 'digest')
+      end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+    end
+
+    it 'should not allow access to remember_token' do
+      expect do
+	User.new(remember_token: 'token')
       end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end
   end
