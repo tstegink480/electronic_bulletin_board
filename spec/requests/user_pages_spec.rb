@@ -55,39 +55,9 @@ describe "UserPages" do
       it { should have_button('Create advertisement') }
     end
 
-    describe 'access from other user' do
-      let(:other_user) { FactoryGirl.create(:user) }
-
-      before do
-	signin user
-	visit user_path(other_user)
-      end
-
-      it { should have_error('Wrong user') }
-#      specify { response.should redirect_to(user_path(user)) }
-    end
   end
 
   describe 'user listing' do
-    describe 'before signing in' do
-      before { visit users_path }
-
-      it { should have_error('Not signed in') }
-#      specify { response.should redirect_to(root_path) }
-    end
-
-    describe 'signed in as regular user' do
-      let(:user) { FactoryGirl.create(:user) }
-
-      before do
-	signin user
-	visit users_path
-      end
-
-      it { should have_error('Not an administrator') }
-#      specify { response.should redirect_to(user_path(user)) }
-    end
-
     describe 'signed in as administrator' do
       let(:admin) { FactoryGirl.create(:admin) }
       let!(:user) { FactoryGirl.create(:user) }
