@@ -8,5 +8,36 @@ class Tile < ActiveRecord::Base
 	validates :x_location, presence: true, :numericality => { :greater_than_or_equal_to => 0 }
 	validates :y_location, presence: true, :numericality => { :greater_than_or_equal_to => 0 }
 	validates :cost, presence: true, :numericality => { :greater_than_or_equal_to => 0 }
+	validate :check_tile_bounds
+
+	private
+					def check_tile_bounds
+						if x_location < advertisement.x_location
+							errors.add(:x_location, "ASDF")
+						end
+						
+						if y_location < advertisement.y_location
+							errors.add(:y_location, "ASDF")
+						end
+
+						if x_location >= board.width
+							errors.add(:x_location, "x location is greater than board width")
+						end
+
+
+						if y_location >= board.height
+							errors.add(:y_location, "y location is greater than board height")
+						end
+
+						if y_location >= advertisement.y_location + advertisement.height
+							errors.add(:y_location, "y location is greater than the add y location plus the ad height")
+						end
+
+						if x_location >= advertisement.x_location + advertisement.width
+							errors.add(:x_location, "x location is greater than the ad x location plus the ad width")
+						end
+
+					end
+
 
 end
