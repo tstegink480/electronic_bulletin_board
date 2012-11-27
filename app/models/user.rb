@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :password_digest, :remember_token
-	attr_protected :admin
+  attr_accessible :email, :name
+	attr_protected :admin, :password_digest, :remember_token
 
+	has_secure_password
   has_many :boards
   has_many :advertisements
   has_many :payment_details

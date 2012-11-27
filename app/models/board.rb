@@ -12,5 +12,12 @@ class Board < ActiveRecord::Base
 	validates :width, presence: true, :numericality => { :greater_than_or_equal_to => 1 }
 	validates :timezone, presence: true
 	validates_inclusion_of :timezone, :in => ActiveSupport::TimeZone.zones_map(&:to_s)
+	validate :check_board_bounds
+
+	private
+					def check_board_bounds
+						
+					end
+
 
 end

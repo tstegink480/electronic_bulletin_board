@@ -21,22 +21,26 @@ class Advertisement < ActiveRecord::Base
 
 	private
 					def check_advertisement_bounds
-						if board.width <= x_location
-							errors.add(:x_location, "x location is greater than or equal to the board width")
-						end
+						unless x_location.nil?
+										if board.width <= x_location
+											errors.add(:x_location, "x location is greater than or equal to the board width")
+										end
 
-						if board.width < x_location + width
-							errors.add(:x_location, "x location plus width is greater than the board width")
-						end
+										if board.width < x_location + width
+											errors.add(:x_location, "x location plus width is greater than the board width")
+										end
 
-						if board.height <= y_location
-							errors.add(:y_location, "y location is greater than or equal to the board height")
 						end
+						
+						unless y_location.nil?
+										if board.height <= y_location
+											errors.add(:y_location, "y location is greater than or equal to the board height")
+										end
 
-						if board.height < y_location + height
-							errors.add(:y_location, "y location plus height is greater than the board height")
+										if board.height < y_location + height
+											errors.add(:y_location, "y location plus height is greater than the board height")
+										end
 						end
-
 					end
 	
 end
