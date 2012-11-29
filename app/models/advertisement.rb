@@ -19,6 +19,14 @@ class Advertisement < ActiveRecord::Base
 	validate :check_advertisement_bounds
 
 
+	def image_contents=
+
+	end
+
+	def charge
+
+	end
+
 	private
 					def check_advertisement_bounds
 						unless x_location.nil?

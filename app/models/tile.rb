@@ -10,6 +10,11 @@ class Tile < ActiveRecord::Base
 	validates :cost, presence: true, :numericality => { :greater_than_or_equal_to => 0 }
 	validate :check_tile_bounds
 
+
+	def age
+
+	end
+
 	private
 					def check_tile_bounds
 						unless x_location.nil?

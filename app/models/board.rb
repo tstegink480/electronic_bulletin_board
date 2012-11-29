@@ -14,6 +14,11 @@ class Board < ActiveRecord::Base
 	validates_inclusion_of :timezone, :in => ActiveSupport::TimeZone.zones_map(&:to_s)
 	validate :check_board_bounds
 
+	def age
+
+	end
+
+
 	private
 					def check_board_bounds
 						
