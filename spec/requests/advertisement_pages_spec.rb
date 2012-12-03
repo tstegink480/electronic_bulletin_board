@@ -68,6 +68,7 @@ describe "AdvertisementPages" do
 
 	specify { "#{64 * ad.x_location}px".should eql_element_property_value("img#ad_#{ad.id}_image", 'left') }
 	specify { "#{64 * ad.y_location}px".should eql_element_property_value("img#ad_#{ad.id}_image", 'top') }
+	specify { ad.id.to_s.should eql_element_property_value("img#ad_#{ad.id}_image", 'z-index') }
       end
     end
   end
