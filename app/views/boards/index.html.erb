@@ -1,0 +1,14 @@
+<% provide(:title, 'All boards') %>
+<h1>All Boards</h1>
+
+<ul class="boards">
+  <% @board.each do |board| %>
+    <li>
+      board.name
+      
+      <%= link_to board.name %>
+      (<%= board.width %>x<%= board.height %>)
+  <% end %>
+    </li>
+
+</ul>
