@@ -4,7 +4,11 @@
     <section>
       <h1>
         <%= @board.name %>
-        <button type="button">Create board</button>
       </h1>
+        <div><%= @board.timezone %></div>
+		<div><%= "Created by: #{@board.user.name}" %></div>
+		<div><%= "Width: #{pluralize(@board.width, 'tile')}" %></div>
+		<div><%= "Height: #{pluralize(@board.height, 'tile')}" %></div>
+		<input type="button" value="Create advertisement">
     </section>
 </div>

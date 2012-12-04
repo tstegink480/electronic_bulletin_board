@@ -2,13 +2,14 @@
 <h1>All Boards</h1>
 
 <ul class="boards">
-  <% @board.each do |board| %>
+  <% @boards.each do |board| %>
     <li>
-      board.name
       
-      <%= link_to board.name %>
+      
+      <%= link_to board.name, board %>
       (<%= board.width %>x<%= board.height %>)
-  <% end %>
+  
     </li>
+    <% end %>
 
 </ul>

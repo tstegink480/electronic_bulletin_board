@@ -24,7 +24,7 @@ class UsersController < ApplicationController
       flash[:success] = 'Welcome'
       redirect_to @user
   else
-	  flash.now[:error] = 'Not signed in'
+	  flash[:error] = 'Not signed in'
       render 'new'
       end
   end
