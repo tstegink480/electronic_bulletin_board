@@ -12,10 +12,14 @@
   <div class="navbar-inner">
     <div class="container">
       <nav>
+       <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+      <%= yield %>
         <ul class="nav pull-right">
           <li><%= link_to "Home", root_path %></li>
-          
           <% if signed_in? %>
+      	<%= yield %>
             <li><%= link_to "Users", users_path %></li>
             <li id="fat-menu" class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">

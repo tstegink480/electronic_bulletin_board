@@ -20,9 +20,11 @@ class UsersController < ApplicationController
   if signed_in?
       redirect_to(root_path)
   else if @user.save
-      sign_in @user
+      
+      flash[:success] = 'Welcome'
       redirect_to @user
   else
+	  flash.now[:error] = 'Not signed in'
       render 'new'
       end
   end

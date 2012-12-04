@@ -22,6 +22,7 @@ RSpec::Matchers.define :have_error do |expected|
   end
 end
 
+
 def browser
   page.driver.browser
 end
