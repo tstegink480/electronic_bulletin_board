@@ -6,4 +6,6 @@ class PaymentDetail < ActiveRecord::Base
   belongs_to :payable , polymorphic: true
 
 	validates :amount, presence: true, numericality: true
+	
+
 end

@@ -1,54 +1,40 @@
 class BoardsController < ApplicationController
-  before_filter :signed_in_user, only: [:index, :edit, :update, :destroy]
+  before_filter :signed_in_user, only: [:new, :create]
 
-
-
-def create
-  @board = current_user.boards.create(params[:board])
- if @board.save
-      
-      flash[:success] = 'Board created'
-      redirect_to @board
-  else
-      render 'new'
-      end
-  end
-  
-  
   def new
-  	@board = Board.new
+      @board = Board.new
   end
-
-
-    def show
-		@board = Board.find(params[:id])
-	end  
-
-
-	def index
-		@boards = Board.all
-	end
-
-  def signed_in?
-    !current_user.nil?
-  end
-
-
-  def current_user
-    @current_user ||= User.find_by_remember_token(cookies[:remember_token])
-  end
-
-
-  def signed_in_user
-    unless signed_in?
-      store_location
-      redirect_to signin_url, notice: "Please sign in."
+  
+  def create
+    @board = current_user.boards.create(params[:board])
+    if @board.save
+            #@pd = payment_details
+            @advertisement = @board.advertisements.build()
+            @advertisement.x_location = 0
+            @advertisement.y_location = 0
+            @advertisement.height = @board.height
+            @advertisement.width = @board.width
+            
+            @advertisement.image = "rails.png"
+            
+            @advertisement.user = current_user
+            @advertisement.save
+            flash[:success] = "Board created"
+            redirect_to @board
+    else
+            flash.now[:error] = 'Invalid board information'
+            render 'new'
     end
   end
-
-
-  def store_location
-    session[:return_to] = request.url
+  
+  def index
+  @boards = Board.all
   end
-
+  
+  def show
+    @board = Board.find(params[:id])
+    @ads = @board.advertisements
+  end
+  
+  
 end

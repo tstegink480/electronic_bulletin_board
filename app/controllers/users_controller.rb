@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:index, :edit, :update, :destroy]
   before_filter :correct_user,   only: [:edit, :update]
-  before_filter :admin_user,     only: :destroy
+  before_filter :correct_user_show, only: :show
+  before_filter :admin_user,     only: [:destroy, :index]
 
   def show
 	  @user = User.find(params[:id])
@@ -16,18 +17,18 @@ class UsersController < ApplicationController
   end
   
   def create
-  @user = User.new(params[:user])
-  if signed_in?
-      redirect_to(root_path)
-  else if @user.save
+  	@user = User.new(params[:user])
+  	if signed_in?
+      	redirect_to(root_path)
+ 	 else if @user.save
       
-      flash[:success] = 'Welcome'
-      redirect_to @user
-  else
-	  flash[:error] = 'Not signed in'
-      render 'new'
+      	flash[:success] = 'Welcome'
+      	redirect_to @user
+  	else
+	  	flash[:error] = 'Not signed in'
+      	render 'new'
       end
-  end
+  	end
   end
   
   def index
@@ -112,6 +113,15 @@ class UsersController < ApplicationController
     
      def admin_user
       redirect_to(root_path) unless current_user.admin?
+    end
+
+    def correct_user_show
+      @user = User.find(params[:id])
+
+      unless current_user?(@user)
+          flash[:error] = "Wrong user"
+          redirect_to(root_path) 
+      end
     end
     
 

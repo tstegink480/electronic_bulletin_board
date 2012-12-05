@@ -4,7 +4,7 @@
 <div class = "row">
 	<div class = "span6 offset">
 		<%= form_for(@board) do |board| %>
-			<%= render 'shared/error_messages', object: @board %>
+			
 			
 			<%= board.label :name %>
 			<%= board.text_field :name %>
@@ -18,7 +18,7 @@
 			<%= board.label :height %>
 			<%= board.text_field :height %>
 			
-			<input type="submit" value="Create board">
+			<%= board.submit "Create board", class: "btn btn-large btn-primary" %>
 			
 		<% end %>
 	</div>

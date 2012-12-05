@@ -20,10 +20,14 @@ class Advertisement < ActiveRecord::Base
 
 
 	def image_contents=
+ 	  image.read()	
+ 	end
+
+	def charge
 
 	end
 
-	def charge
+	def amount
 
 	end
 
