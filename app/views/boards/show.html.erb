@@ -1,18 +1,51 @@
 <% provide(:title, @board.name) %>
-<div class="row">
-  <aside class="span4">
-    <section>
+<div class="hero-unit">
       <h1>
         <%= @board.name %>
       </h1>
-        <div><%= @board.timezone %></div>
-		<div><%= "Created by: #{@board.user.name}" %></div>
-		<div><%= "Width: #{pluralize(@board.width, 'tile')}" %></div>
-		<div><%= "Height: #{pluralize(@board.height, 'tile')}" %></div>
-		
-		<div><%= button_to "Create advertisement", new_board_advertisement_path(@board), query: @board.id, class: "btn btn-medium btn-primary", method: 'get' %></div>
-		<div class = "ad_container" id="board" style="position: relative; box-shadow: 0px 0px 3px #000000; width: <%= Integer(@board.width) * 64 %>px; height: <%= Integer(@board.height) * 64 %>px;"></div>
-			<% @board.advertisements.each do |advertisement| %>
-				<div style="position: absolute; left: <%= advertisement.x_location * 64 %>px; top: <%= advertisement.y_location * 64 %>px; width: <%= advertisement.width * 64 %>px; height: <%= advertisement.height * 64 %>px; background: url('/images/<%= advertisement.id %>');"></div>
-			<% end %>
-    </section>
+      <h2>
+        <%= "Created by: #{@board.user.name}" %>
+      </h2>
+      <%= button_to "Create advertisement", new_board_advertisement_path(@board), query: @board.id, class: "btn btn-medium btn-primary", method: "get" %>
+</div>
+<div id = "info" style: "margin: 0 auto;">
+<h4 style = "margin-bottom: 15px;">
+      Board Information = 
+      <%= "Width: #{pluralize(@board.width, 'tile')}" %> |
+      <%= "Height: #{pluralize(@board.height, 'tile')}" %> |
+      <%= "Timezone: #{@board.timezone}" %>
+</h4>
+</div>
+
+<hr>
+
+<h2>Advertisement Listing </h2>
+<ul class="ads">
+  <% @ads.each do |ad| %>
+  <li>
+    
+    <%= "Username: #{ad.user.name}" %> |
+    <%= "Width: #{pluralize(ad.width, 'tile')}" %> |
+    <%= "Height: #{pluralize(ad.height, 'tile')}" %> |
+    <%= "X Location: #{ad.x_location}" %> |
+    <%= "Y Location: #{ad.y_location}" %> 
+  
+  </li>
+  
+   <% end %>
+</ul>
+
+<% @count = 1 %>
+
+
+
+<div class="board" style= "border: 4px solid black; position: relative; width: <%= Integer(@board.width) * 64 %>px; height: <%= Integer(@board.height) * 64 %>px;">
+
+  <div class="ad_container" style= "position: relative; margin-left: 0px; width: <%= Integer(@board.width) * 64 %>px; height: <%= Integer(@board.height) * 64 %>px; z-index: 0; display: block;"></div>
+        <% @board.advertisements.each do |advertisement| %>
+
+                <img src="<%= url_for(:controller => "images", :action => "show", :id => advertisement.id)%>" id="<%= "ad_#{advertisement.id}_image" %>" style="position: absolute; left: <%= advertisement.x_location * 64 %>px; top: <%= advertisement.y_location * 64 %>px; width: <%= advertisement.width * 64 %>px; height: <%= advertisement.height * 64 %>px; z-index: <%= advertisement.id %> ; padding: 0px; margin:0px;">
+        <% @count = @count + 1 %>
+        <% end %>
+    
+</div>
