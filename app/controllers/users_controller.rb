@@ -1,12 +1,15 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:index, :edit, :update, :destroy]
   before_filter :correct_user,   only: [:edit, :update]
-  before_filter :correct_user_show, only: :show
   before_filter :admin_user,     only: [:destroy, :index]
+  before_filter :correct_user_show, only: [:show]
 
   def show
-	  @user = User.find(params[:id])
-          
+          @user = User.find(params[:id])
+          if !signed_in?
+            flash[:error] = "Not Signed in"
+            redirect_to (root_path)
+          end
   end
 
   def new
@@ -21,7 +24,7 @@ class UsersController < ApplicationController
   	if signed_in?
       	redirect_to(root_path)
  	 else if @user.save
-      
+        sign_in @user
       	flash[:success] = 'Welcome'
       	redirect_to @user
   	else
@@ -60,47 +63,47 @@ class UsersController < ApplicationController
   end
   
 
-  def sign_in(user)
-    cookies.permanent[:remember_token] = user.remember_token
-    self.current_user = user
-  end
+  # def sign_in(user)
+  #   cookies.permanent[:remember_token] = user.remember_token
+  #   self.current_user = user
+  # end
   
-  def signed_in?
-    !current_user.nil?
-  end
+  # def signed_in?
+  #   !current_user.nil?
+  # end
   
-  def current_user=(user)
-    @current_user = user
-  end
+  # def current_user=(user)
+  #   @current_user = user
+  # end
   
-  def current_user
-    @current_user ||= User.find_by_remember_token(cookies[:remember_token])
-  end
+  # def current_user
+  #   @current_user ||= User.find_by_remember_token(cookies[:remember_token])
+  # end
   
-  def current_user?(user)
-    user == current_user
-  end
+  # def current_user?(user)
+  #   user == current_user
+  # end
   
-  def signed_in_user
-    unless signed_in?
-      store_location
-      redirect_to signin_url, notice: "Please sign in."
-    end
-  end
+  # def signed_in_user
+  #   unless signed_in?
+  #     store_location
+  #     redirect_to signin_url, notice: "Please sign in."
+  #   end
+  # end
   
-  def sign_out
-    self.current_user = nil
-    cookies.delete(:remember_token)
-  end
+  # def sign_out
+  #   self.current_user = nil
+  #   cookies.delete(:remember_token)
+  # end
   
-  def redirect_back_or(default)
-    redirect_to(session[:return_to] || default)
-    session.delete(:return_to)
-  end
+  # def redirect_back_or(default)
+  #   redirect_to(session[:return_to] || default)
+  #   session.delete(:return_to)
+  # end
 
-  def store_location
-    session[:return_to] = request.url
-  end
+  # def store_location
+  #   session[:return_to] = request.url
+  # end
 
 
 
@@ -112,17 +115,31 @@ class UsersController < ApplicationController
     end
     
      def admin_user
-      redirect_to(root_path) unless current_user.admin?
-    end
-
-    def correct_user_show
-      @user = User.find(params[:id])
-
-      unless current_user?(@user)
-          flash[:error] = "Wrong user"
-          redirect_to(root_path) 
+      if current_user.nil?
+        flash[:error] = "Not signed in"
+        redirect_to(root_path)
+     else
+      unless current_user.admin?
+        flash[:error] = "Not an administrator"
+        redirect_to(root_path)
       end
     end
+  end
+
+
+
+    #To prevent you from seeing a profile that isn't yours
+def correct_user_show
+      @user = User.find(params[:id])
+      if @user.nil?
+        flash[:error] = "Not signed in"
+        redirect_to(root_path) 
+      end
+      unless current_user?(@user)
+        flash[:error] = "Wrong user"
+        redirect_to(root_path) 
+      end
+  end
     
 
 end

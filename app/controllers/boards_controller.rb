@@ -1,5 +1,5 @@
 class BoardsController < ApplicationController
-  before_filter :signed_in_user, only: [:new, :create]
+  before_filter :signed_in_user_board, only: [:new, :create]
 
   def new
       @board = Board.new
@@ -28,12 +28,12 @@ class BoardsController < ApplicationController
   end
   
   def index
-  @boards = Board.all
+    @boards = Board.all
   end
   
   def show
-    @board = Board.find(params[:id])
-    @ads = @board.advertisements
+      @board = Board.find(params[:id])
+      @ads = @board.advertisements
   end
   
   
