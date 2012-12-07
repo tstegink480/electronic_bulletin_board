@@ -18,7 +18,7 @@ def create
       flash[:success] = "Advertisement created"
       redirect_to @board
     else
-                        flash.now[:error] = 'Invalid advertisement information'
+      flash.now[:error] = 'Invalid advertisement information'
       render 'new'
     end
   end

@@ -20,7 +20,7 @@
 <hr>
 
 <h2>Advertisement Listing </h2>
-<ul class="ads">
+<ol class="ads">
   <% @ads.each do |ad| %>
   <li>
     
@@ -33,13 +33,13 @@
   </li>
   
    <% end %>
-</ul>
+</ol>
 
 <% @count = 1 %>
 
 
 
-<div class="board" style= "border: 4px solid black; position: relative; width: <%= Integer(@board.width) * 64 %>px; height: <%= Integer(@board.height) * 64 %>px;">
+<div id = 'boarder', class="board" style= "border: 2px solid black; position: relative; width: <%= Integer(@board.width) * 64 %>px; height: <%= Integer(@board.height) * 64 %>px;">
 
   <div class="ad_container" style= "position: relative; margin-left: 0px; width: <%= Integer(@board.width) * 64 %>px; height: <%= Integer(@board.height) * 64 %>px; z-index: 0; display: block;"></div>
         <% @board.advertisements.each do |advertisement| %>

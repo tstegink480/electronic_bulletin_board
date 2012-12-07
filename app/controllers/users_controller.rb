@@ -28,7 +28,7 @@ class UsersController < ApplicationController
       	flash[:success] = 'Welcome'
       	redirect_to @user
   	else
-	  	flash[:error] = 'Not signed in'
+	  	  flash[:error] = 'Not signed in'
       	render 'new'
       end
   	end
@@ -131,14 +131,15 @@ class UsersController < ApplicationController
     #To prevent you from seeing a profile that isn't yours
 def correct_user_show
       @user = User.find(params[:id])
-      if @user.nil?
+      if !signed_in?
         flash[:error] = "Not signed in"
         redirect_to(root_path) 
-      end
+      else
       unless current_user?(@user)
         flash[:error] = "Wrong user"
-        redirect_to(root_path) 
+        redirect_to(root_path)
       end
+    end
   end
     
 

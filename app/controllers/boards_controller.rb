@@ -1,6 +1,7 @@
 class BoardsController < ApplicationController
   before_filter :signed_in_user_board, only: [:new, :create]
 
+
   def new
       @board = Board.new
   end
