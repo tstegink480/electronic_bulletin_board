@@ -7,10 +7,10 @@ class AdvertisementsController < ApplicationController
 def create
     @board = Board.find(params[:board_id])
     @advertisement = @board.advertisements.build(params[:advertisement])
-                unless @advertisement.image.nil?
+    unless @advertisement.image.nil?
 
-                    @advertisement.image = @advertisement.image.read()
-                end
+      @advertisement.image = @advertisement.image.read()
+    end
     @advertisement.user = current_user
 
     if @advertisement.save
