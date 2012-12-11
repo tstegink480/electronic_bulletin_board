@@ -35,7 +35,6 @@ class BoardsController < ApplicationController
   def show
       @board = Board.find(params[:id])
       @ads = @board.advertisements
-      @payment_detail = @board.payment_detail
   end
   
   

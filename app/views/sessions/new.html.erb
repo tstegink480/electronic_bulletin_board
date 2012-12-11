@@ -4,6 +4,10 @@
  <div class="row">
    <div class="span6 offset3">
      <%= form_tag sessions_path do %>
+      <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+      <%= yield %>
  
        <%= label_tag :email %>
        <%= text_field_tag :email, params[:email] %>
@@ -13,8 +17,7 @@
  
        <%= submit_tag "Sign in", class: "btn btn-large btn-primary" %>
      <% end %>
- 
+ 	
      <p>New user? <%= link_to "Sign up now!", signup_path %></p>
    </div>
- </div>
-~           
+ </div>       

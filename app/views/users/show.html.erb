@@ -1,0 +1,13 @@
+<% provide(:title, @user.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        <%= gravatar_for @user %>
+        <%= @user.name %>
+        <%= @user.email %>
+        <%= button_to "Create board", new_board_path, method: "get", class: "btn btn-large btn-primary" %>
+        <%= link_to "Sign out", signout_path, method: "delete" %>
+      </h1>
+    </section>
+</div>

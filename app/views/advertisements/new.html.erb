@@ -1,0 +1,32 @@
+<% provide(:title, "Create Advertisement") %>
+<h1>Create Advertisment</h1>
+
+<div class="row">
+	<div class="span6 offset">
+	<%= form_for([@board, @advertisement]) do |advertisement| %>
+
+
+		<%= advertisement.label :image %>
+		<%= advertisement.file_field :image, :id => "advertisement_image_contents" %>
+
+		<%= advertisement.label :x_location  %>
+		<%= advertisement.text_field :x_location, :id => "X Location" %>
+
+		<%= advertisement.label :y_location %>
+		<%= advertisement.text_field :y_location, :id => "Y Location" %>
+
+		<%= advertisement.label :width %>
+		<%= advertisement.text_field :width %>
+
+		<%= advertisement.label :height %>
+		<%= advertisement.text_field :height %>
+
+	</br>
+
+		<%= advertisement.submit "Create advertisement", class: "btn btn-medium btn-primary" %>
+	<% end %>
+	</div>
+</div>
+
+
+</div>

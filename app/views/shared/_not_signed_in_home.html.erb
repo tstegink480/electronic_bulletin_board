@@ -1,0 +1,13 @@
+  <div class="center hero-unit" id = 'hello'>
+    <h2>Welcome to the Electronic Buletin Board</h2>
+
+	  <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+
+    <%= link_to "Sign up now!", signup_path, 
+                                class: "btn btn-large btn-primary" %>
+  </div>
+  
+
+  <p>Electronic Bulletin Board</p>

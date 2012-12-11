@@ -1,3 +1,6 @@
-<h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
-<p>Electronic Bulletin Board</p>
+<% if signed_in? %>
+	  </br>
+      <%= render 'shared/signed_in_home' %>
+<% else %>
+      <%= render 'shared/not_signed_in_home' %>
+<% end %> 
