@@ -19,6 +19,59 @@ class Advertisement < ActiveRecord::Base
 	validate :check_advertisement_bounds
 
 
+	def image_contents=
+ 	  image.read()	
+ 	end
+
+	def charge
+
+	end
+
+	def amount
+
+	end
+
+	before_create :make_tiles
+
+
+
+def make_tiles
+	  	for x in x_location..(x_location + width - 1) do 
+	  		for y in y_location..(y_location + height - 1) do
+	  			t = board.tiles.where(:x_location => x, :y_location => y).first
+	  			if t.nil?
+		  			t = tiles.build(:x_location => x, :y_location => y)
+		  			t.cost = 0
+		  		else
+		  			prev_cost = t.cost
+		  			t.destroy
+		  			t = tiles.build(:x_location => x, :y_location => y)
+		  			new_cost = 2 * prev_cost
+		  			if new_cost < 1
+		  				new_cost = 1
+		  			end
+		  			new_cost = new_cost.to_f
+		  			t.cost = new_cost
+		  		end
+
+	  		end
+	  	end
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	private
 					def check_advertisement_bounds
 						unless x_location.nil?
@@ -42,5 +95,60 @@ class Advertisement < ActiveRecord::Base
 										end
 						end
 					end
+
+
+
+
+
+
+
+
+
+
+
+
+def size_check
+		if x_location.is_a?(Integer) && y_location.is_a?(Integer) && width.is_a?(Integer) && height.is_a?(Integer)
+			if x_location >= board.width
+				errors.add(:x_location, "can't be larger than the board width")
+			end
+
+			if y_location >= board.height
+				errors.add(:y_location, "can't be larger than the board height")
+			end
+
+			if width > board.width
+				errors.add(:width, "can't be larger than the board width")
+			end
+
+			if height > board.height
+				errors.add(:height, "can't be larger than  the board height")
+			end
+
+			if x_location + width > board.width
+				errors.add(:x_location, "combined can't be larger than the board width")
+			end
+
+			if y_location + height > board.height
+				errors.add(:y_location, "combined can't be larger than the board height")
+			end
+		end
+	end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 end

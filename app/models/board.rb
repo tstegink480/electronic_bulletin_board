@@ -1,6 +1,6 @@
 class Board < ActiveRecord::Base
   attr_accessible :height, :name, :timezone, :width
-	attr_protected :user_id
+  attr_protected :user_id
 
   has_many :tiles, through: :advertisements
   has_many :advertisements
@@ -14,10 +14,33 @@ class Board < ActiveRecord::Base
 	validates_inclusion_of :timezone, :in => ActiveSupport::TimeZone.zones_map(&:to_s)
 	validate :check_board_bounds
 
+	before_create :make_fake_ad
+
+	def age
+
+	end
+
+	def make_fake_ad
+    	ad = advertisements.build(:image => 'rails.png', :x_location => 0, :y_location => 0, :width => width, :height => height)
+    	ad.user = user
+    	pd = create_payment_detail(:amount => width*height)
+    	pd.user = user
+  	end
+
+
 	private
-					def check_board_bounds
+		def check_board_bounds
 						
-					end
+		end
+
+
+
+def make_payment_detail
+    pd = create_payment_detail(:amount => width*height)
+    pd.user = user
+  end
+
+
 
 
 end

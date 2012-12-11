@@ -10,6 +10,21 @@ class Tile < ActiveRecord::Base
 	validates :cost, presence: true, :numericality => { :greater_than_or_equal_to => 0 }
 	validate :check_tile_bounds
 
+
+  def age
+      for x in x_location..(x_location + width - 1) do
+        for y in y_location..(y_location + height - 1) do
+          tile = board.tiles.where(:x_location => x, :y_location => y).first
+          tile_cost = tile.cost.to_f
+          tile_cost = tile_cost * 0.5
+          if tile_cost < 0.01
+            tile_cost = 0.0
+          end
+          tile.cost = tile_cost
+        end
+      end
+  end
+
 	private
 					def check_tile_bounds
 						unless x_location.nil?
